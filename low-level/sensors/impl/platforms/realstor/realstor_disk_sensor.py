@@ -294,6 +294,9 @@ class RealStorDiskSensor(SensorThread, InternalMsgQ):
         response = self.rssencl.ws_request(
                         url, self.rssencl.ws.HTTP_GET)
 
+        logger.error("ARCHDEBUG method: rss_cliapi_poll_disks  resp headers: {0}".format(response.headers))
+        logger.error("ARCHDEBUG method: rss_cliapi_poll_disks  response.content: {0}".format(response.content))
+
         if not response:
             logger.warn(f"{self.rssencl.LDR_R1_ENCL}:: Disks status unavailable as ws request {url} failed")
             return
@@ -308,6 +311,11 @@ class RealStorDiskSensor(SensorThread, InternalMsgQ):
             jresponse = json.loads(response.content)
         except ValueError as badjson:
             logger.error(f"{url} returned mal-formed json:\n{badjson}")
+
+#        logger.error("ARCHDEBUG method: rss_cliapi_poll_disks  resp headers: {0}".format(response.headers))
+#        controllers = jresponse.get("controllers")
+#        logger.error("ARCHDEBUG controllers  {0}".format(controllers))
+
 
         if jresponse:
             api_resp = self.rssencl.get_api_status(jresponse['status'])

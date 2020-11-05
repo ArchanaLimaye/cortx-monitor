@@ -201,6 +201,10 @@ class RealStorLogicalVolumeSensor(SensorThread, InternalMsgQ):
 
         response = self.rssencl.ws_request(url, self.rssencl.ws.HTTP_GET)
 
+        logger.error("ARCHDEBUG method: _get_disk_groups resp headers: {0}".format(response.headers))
+        logger.error("ARCHDEBUG method: _get_disk_groups response.text {0}".format(response.text))
+
+
         if not response:
             logger.warn(f"{self.rssencl.LDR_R1_ENCL}:: Disk Groups status unavailable as ws request {url} failed")
             return
@@ -224,6 +228,10 @@ class RealStorLogicalVolumeSensor(SensorThread, InternalMsgQ):
         url = f"{url}/pool/{pool_serial_number}"
 
         response = self.rssencl.ws_request(url, self.rssencl.ws.HTTP_GET)
+
+        logger.error("ARCHDEBUG method: _get_logical_volumes resp headers: {0}".format(response.headers))
+        logger.error("ARCHDEBUG method: _get_logical_volumes response.text {0}".format(response.text))
+
 
         if not response:
             logger.warn(f"{self.rssencl.LDR_R1_ENCL}:: Logical Volume status unavailable as ws request {url}"

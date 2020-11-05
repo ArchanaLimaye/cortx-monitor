@@ -179,6 +179,10 @@ class RealStorActuator(Actuator, Debug):
 
         response = self.rssencl.ws_request( url, self.rssencl.ws.HTTP_GET)
 
+        logger.error("ARCHDEBUG method: _get_disk  resp headers: {0}".format(response.headers))
+        logger.error("ARCHDEBUG method: _get_disk response.content {0}".format(response.content))
+
+
         if not response:
             logger.warn("{0}:: Disks status unavailable as ws request {1}"
                 " failed".format(self.rssencl.LDR_R1_ENCL, url))
@@ -194,6 +198,11 @@ class RealStorActuator(Actuator, Debug):
             jresponse = json.loads(response.content)
         except ValueError as badjson:
             logger.error("%s returned mal-formed json:\n%s" % (url, badjson))
+
+#        logger.error("ARCHDEBUG method: _get_disk  resp headers: {0}".format(response.headers))
+#        controllers = jresponse.get("controllers")
+#        logger.error("ARCHDEBUG controllers  {0}".format(controllers))
+
 
         if jresponse:
             api_resp = self.rssencl.get_api_status(jresponse['status'])
@@ -217,6 +226,11 @@ class RealStorActuator(Actuator, Debug):
         response = self.rssencl.ws_request(
                         url, self.rssencl.ws.HTTP_GET)
 
+        logger.error("ARCHDEBUG method: _get_fan_modules  resp headers: {0}".format(response.headers))
+        logger.error("ARCHDEBUG method: _get_fan_modules response.text  {0}".format(response.text))
+
+
+
         if not response:
             logger.warn("{0}:: Fan-modules status unavailable as ws request {1}"
                             "failed".format(self.rssencl.LDR_R1_ENCL, url))
@@ -230,6 +244,7 @@ class RealStorActuator(Actuator, Debug):
             return
 
         response_data = json.loads(response.text)
+
 
         fan_modules_list = response_data["fan-modules"]
         fan_modules_list = self._get_fan_module_data(fan_modules_list, instance_id)
@@ -305,6 +320,9 @@ class RealStorActuator(Actuator, Debug):
         response = self.rssencl.ws_request(
                         url, self.rssencl.ws.HTTP_GET)
 
+        logger.error("ARCHDEBUG method: _get_controllers  resp headers: {0}".format(response.headers))
+        logger.error("ARCHDEBUG method: _get_controllers  response.text: {0}".format(response.text))
+ 
         if not response:
             logger.warn("{0}:: Controller status unavailable as ws request {1}"
                             "failed".format(self.rssencl.LDR_R1_ENCL, url))
@@ -318,6 +336,12 @@ class RealStorActuator(Actuator, Debug):
             return
 
         response_data = json.loads(response.text)
+
+        #logger.error("ARCHDEBUG method: _get_controllers  resp headers: {0}".format(response.headers))
+        #logger.error("ARCHDEBUG method: _get_controllers  response.text: {0}".format(response.text))
+        #controllers = response_data.get("controllers")
+        #logger.error("ARCHDEBUG controllers  {0}".format(controllers))
+
 
         controllers_list = response_data["controllers"]
         controllers_list = self._get_controller_data(controllers_list, instance_id)
@@ -390,6 +414,10 @@ class RealStorActuator(Actuator, Debug):
         url = self.rssencl.build_url(
                       self.rssencl.URI_CLIAPI_SHOWPSUS)
         response = self.rssencl.ws_request( url, self.rssencl.ws.HTTP_GET)
+        
+        logger.error("ARCHDEBUG method: _get_psu  resp headers: {0}".format(response.headers))
+        logger.error("ARCHDEBUG method: _get_psu  response.content: {0}".format(response.content))
+
         if not response:
             logger.warn("{0}: Psu status unavailable as ws request {1}"
                     " failed".format(self.rssencl.LDR_R1_ENCL, url))
@@ -403,6 +431,12 @@ class RealStorActuator(Actuator, Debug):
             jresponse = json.loads(response.content)
         except ValueError as badjson:
             logger.error("%s returned mal-formed json:\n%s" % (url, badjson))
+
+        #logger.error("ARCHDEBUG method: _get_psu  resp headers: {0}".format(response.headers))
+        #controllers = jresponse.get("controllers")
+        #logger.error("ARCHDEBUG controllers  {0}".format(controllers))
+
+
         if jresponse:
             api_resp = self.rssencl.get_api_status(jresponse['status'])
             if ((api_resp == -1) and
@@ -426,6 +460,10 @@ class RealStorActuator(Actuator, Debug):
         url = self.rssencl.build_url(
                       self.rssencl.URI_CLIAPI_SHOWENCLOSURE)
         response = self.rssencl.ws_request( url, self.rssencl.ws.HTTP_GET)
+        
+        logger.error("ARCHDEBUG method: _get_sideplane  resp headers: {0}".format(response.headers))
+        logger.error("ARCHDEBUG method: _get_sideplane  response.text: {0}".format(response.text))
+
         if not response:
             logger.warn("{0}: Psu status unavailable as ws request {1}"
                     " failed".format(self.rssencl.LDR_R1_ENCL, url))
@@ -439,6 +477,12 @@ class RealStorActuator(Actuator, Debug):
             jresponse = json.loads(response.text)
         except ValueError as badjson:
             logger.error("%s returned mal-formed json:\n%s" % (url, badjson))
+
+        #logger.error("ARCHDEBUG method: _get_sideplane  resp headers: {0}".format(response.headers))
+        #controllers = jresponse.get("controllers")
+        #logger.error("ARCHDEBUG controllers  {0}".format(controllers))
+
+
         if jresponse:
             api_resp = self.rssencl.get_api_status(jresponse['status'])
             if ((api_resp == -1) and
@@ -513,6 +557,9 @@ class RealStorActuator(Actuator, Debug):
         sas_response = self.rssencl.ws_request(sasurl, self.rssencl.ws.HTTP_GET)
         logger.info("_get_sas_port_status, sasresponse for coming is:{0}".format(sas_response))
 
+        logger.error("ARCHDEBUG method: _get_enclosure_data  resp headers: {0}".format(sas_response.headers))
+        logger.error("ARCHDEBUG method: _get_enclosure_data  sas_response.content: {0}".format(sas_response.content))
+
         if not sas_response:
             logger.warn(
                 "{0}:: sas port status unavailable for request:{1} --gets failed".format(self.rssencl.LDR_R1_ENCL, url))
@@ -529,6 +576,11 @@ class RealStorActuator(Actuator, Debug):
             json_response = json.loads(sas_response.content)
         except ValueError as v_error:
             logger.error("{0} returned invalid json:\n{1}".format(sasurl, v_error))
+
+        #logger.error("ARCHDEBUG method: _get_enclosure_data  resp headers: {0}".format(sas_response.headers))
+        #controllers = json_response.get("controllers")
+        #logger.error("ARCHDEBUG controllers  {0}".format(controllers))
+
 
         if json_response is not None:
             api_status = self.rssencl.get_api_status(json_response['status'])
@@ -594,14 +646,26 @@ class RealStorActuator(Actuator, Debug):
         """ query enclosure and return json data"""
         url = self.rssencl.build_url(uri)
         response = self.rssencl.ws_request(url, request_type)
+
+        logger.error("ARCHDEBUG method: _get_encl_response resp headers: {0}".format(response.headers))
+        logger.error("ARCHDEBUG method: _get_encl_response response.content: {0}".format(response.content))
+
         if not response:
             logger.warn(f"Failed to get data for {uri}")
             return None
         if response.status_code != self.rssencl.ws.HTTP_OK:
             logger.error(f"Failed to get data for {uri}")
             return None
+        
+        logger.error("ARCHDEBUG method: _get_encl_response resp headers: {0}".format(response.headers))
         try:
             response = json.loads(response.content)
+
+        #logger.error("ARCHDEBUG method: _get_encl_response resp headers: {0}".format(response.headers))
+        #controllers = response.get("controllers")
+        #logger.error("ARCHDEBUG controllers  {0}".format(controllers))
+
+
             api_response = self.rssencl.get_api_status(response.get('status'))
             if api_response == 0 or \
                 (api_response == -1 and response.status_code == self.rssencl.ws.HTTP_OK):

@@ -226,6 +226,10 @@ class RealStorFanSensor(SensorThread, InternalMsgQ):
         response = self.rssencl.ws_request(
                         url, self.rssencl.ws.HTTP_GET)
 
+        logger.error("ARCHDEBUG method: _get_fan_modules_list resp headers: {0}".format(response.headers))
+        logger.error("ARCHDEBUG method: _get_fan_modules_list response.text {0}".format(response.text))
+
+
         if not response:
             logger.warn(f"{self.rssencl.LDR_R1_ENCL}:: Fan-modules status unavailable as ws request {url} failed")
             return

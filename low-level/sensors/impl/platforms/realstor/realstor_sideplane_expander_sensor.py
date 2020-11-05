@@ -160,6 +160,10 @@ class RealStorSideplaneExpanderSensor(SensorThread, InternalMsgQ):
         response = self.rssencl.ws_request(
                         url, self.rssencl.ws.HTTP_GET)
 
+        logger.error("ARCHDEBUG method: _get_sideplane_expander_list  resp headers: {0}".format(response.headers))
+        logger.error("ARCHDEBUG method: _get_sideplane_expander_list response.text {0}".format(response.text))
+
+
         if not response:
             logger.warn(f"{self.rssencl.LDR_R1_ENCL}:: Enclosure status unavailable as ws request {url} failed")
             return

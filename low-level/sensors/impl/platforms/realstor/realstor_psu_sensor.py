@@ -168,6 +168,10 @@ class RealStorPSUSensor(SensorThread, InternalMsgQ):
         response = self.rssencl.ws_request(
                         url, self.rssencl.ws.HTTP_GET)
 
+        logger.error("ARCHDEBUG method: _get_psus resp headers: {0}".format(response.headers))
+        logger.error("ARCHDEBUG method: _get_psus response.text {0}".format(response.text))
+
+
         if not response:
             logger.warn(f"{self.rssencl.LDR_R1_ENCL}:: PSUs status unavailable as ws request {url} failed")
             return

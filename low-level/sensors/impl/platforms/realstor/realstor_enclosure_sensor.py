@@ -167,6 +167,10 @@ class RealStorEnclosureSensor(SensorThread, InternalMsgQ):
 
         response = self.rssencl.ws_request(url, self.rssencl.ws.HTTP_GET)
 
+        logger.error("ARCHDEBUG method: check_system_status resp headers: {0}".format(response.headers))
+        logger.error("ARCHDEBUG method: check_system_status response.text {0}".format(response.text))
+
+
         if not response:
             logger.warn("System status unavailable as ws request failed")
             return

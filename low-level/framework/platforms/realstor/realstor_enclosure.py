@@ -262,6 +262,9 @@ class RealStorEnclosure(StorageEnclosure):
         response = self.ws.ws_get(url + auth_hash, headers, \
                        self.WEBSERVICE_TIMEOUT)
 
+        logger.error("ARCHDEBUG method: login resp headers: {0}".format(response.headers))
+        logger.error("ARCHDEBUG method: login response.content: {0}".format(response.content))
+
         if not response:
             logger.warn("Login webservice request failed {0}".format(url))
             return
@@ -277,6 +280,11 @@ class RealStorEnclosure(StorageEnclosure):
             jresponse = json.loads(response.content)
         except ValueError as badjson:
             logger.error("%s returned mal-formed json:\n%s" % (url, badjson))
+
+#        logger.error("ARCHDEBUG method: login resp headers: {0}".format(response.headers))
+#        controllers = jresponse.get("controllers")
+#        logger.error("ARCHDEBUG controllers  {0}".format(controllers))
+
 
         if jresponse:
             if jresponse['status'][0]['return-code'] == 1:
@@ -362,6 +370,9 @@ class RealStorEnclosure(StorageEnclosure):
 
         response = self.ws_request(url, self.ws.HTTP_GET)
 
+        logger.error("ARCHDEBUG method: get_system_status resp headers: {0}".format(response.headers))
+        logger.error("ARCHDEBUG method: get_system_status resp response.content: {0}".format(response.content))
+
         if not response:
             logger.warn("System status unavailable as ws request failed")
             return
@@ -378,6 +389,10 @@ class RealStorEnclosure(StorageEnclosure):
             jresponse = json.loads(response.content)
         except ValueError as badjson:
             logger.error("%s returned mal-formed json:\n%s" % (url, badjson))
+
+#        logger.error("ARCHDEBUG method: get_system_status resp headers: {0}".format(response.headers))
+#        controllers = jresponse.get("controllers")
+#        logger.error("ARCHDEBUG controllers  {0}".format(controllers))
 
         if jresponse:
             api_resp = self.get_api_status(jresponse['status'])
